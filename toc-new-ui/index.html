@@ -1,0 +1,73 @@
+
+
+<!DOCTYPE html>  
+<html>  
+<head>  
+  <title>My first Vue app</title>  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
+  <script src="./axios.min.js"></script>
+  <script src="./vue.min.js"></script>
+  <style>
+       .toc-item{
+        margin: 10px;
+       }
+     /* .has-children{
+        padding-left: 25px;
+       
+      } */
+      .toc-item button{
+        background-color: transparent;
+        border: medium none;
+      }
+      .toc-item a{
+          color: #000;
+          text-decoration: none;
+      }
+  </style>
+</head>  
+<body> 
+    <h2>poc 1 </h2>
+<div class="toc-content is-hidden-mobile is-hidden-tablet-only" >
+	<div id="app" class="toc-container">
+		<noindex>
+			<tree-menu
+            	v-for="childlink in tree.childlinks"
+                :childlinks="childlink.childlinks"
+                :depth="0"
+                :title="childlink.title"
+                :nodelink="childlink.nodelink"
+                :toc="childlink.toc"
+                :pathhash="childlink.pathhash"
+                :pagename="childlink.pagename">
+            </tree-menu>
+		</noindex>
+	</div>
+</div>
+
+<script type="text/x-template" id="tree-menu">
+   
+	<div class="toc-item" :style="indent" :class="labelClasses">
+      
+		<button v-if="toc" @click="toggleChildren($event,nodelink)">
+            <img :src="iconClasses" />
+        </button>
+        <a role="button" :data-pwcdoccontext="pathhash" :data-title="title" :target="'#'+pagename" :href="nodelink">
+            {{title}}
+        </a>
+		<tree-menu
+        	v-if="showChildren"
+            v-for="childlink in childlinks"
+            :childlinks="childlink.childlinks"
+            :title="childlink.title"
+            :nodelink="childlink.nodelink"
+            :toc="childlink.toc"
+            :pathhash="childlink.pathhash"
+            :pagename="childlink.pagename"
+            :depth="depth + 1">
+        </tree-menu>
+	</div>
+</script>  
+  
+    <script src="./toc.js"></script> 
+</body>  
+</html> 
